@@ -1,0 +1,13 @@
+# latest version of docker compose - you can see on documentation
+version: '3.7'
+
+services:
+  #custom name of our service
+  smart-brain-api:
+    container_name: backend
+    # image: node:8.15.0 #there is no need because of the build
+    build: ./ #build from Dockerfile file
+    command: npm start
+    working_dir: /usr/src/smart-brain-api
+    ports:
+      - "3000:3000"
