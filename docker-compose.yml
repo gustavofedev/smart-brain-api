@@ -2,20 +2,37 @@
 version: "3.7"
 
 services:
-  #custom name of our service
+
+  #Backend API
   smart-brain-api:
     container_name: backend
     # image: node:8.15.0 #there is no need because of the build
     build: ./ #build from Dockerfile file
     command: npm start
     working_dir: /usr/src/smart-brain-api
+    #shared enviroment variables
+    environment:
+      POSTGRES_URI: postgres://peter:secret@postgres:5432/smartbrain-docker
+    links:
+      - postgres #link to postgres service written in line 30
     ports:
       - "3000:3000"
-    volumes:
+    volumes: #a way to have connection
+      - ./:/usr/src/smart-brain-api
       # ./ -> current directory
       # : -> map to another directory
       # So, I am mapping the changes from my current directory, 
       # to be applied to map destination directory
       # Thus, there's no need to rebuild the container by all
       # changes occoured
-      - ./:/usr/src/smart-brain-api
+
+  # Postgres
+  postgres:
+    image: postgres:9.5
+    environment:
+      POSTGRES_USER: peter
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: smartbrain-docker
+      POSTGRES_HOST: postgres
+    ports:
+      - "5432:5432"
