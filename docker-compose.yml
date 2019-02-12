@@ -1,5 +1,5 @@
 # latest version of docker compose - you can see on documentation
-version: '3.7'
+version: "3.7"
 
 services:
   #custom name of our service
@@ -11,3 +11,11 @@ services:
     working_dir: /usr/src/smart-brain-api
     ports:
       - "3000:3000"
+    volumes:
+      # ./ -> current directory
+      # : -> map to another directory
+      # So, I am mapping the changes from my current directory, 
+      # to be applied to map destination directory
+      # Thus, there's no need to rebuild the container by all
+      # changes occoured
+      - ./:/usr/src/smart-brain-api
