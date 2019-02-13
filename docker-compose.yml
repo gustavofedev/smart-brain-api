@@ -28,11 +28,13 @@ services:
 
   # Postgres
   postgres:
-    image: postgres:9.5
+    # image: postgres:9.5
+    #Docker file found inside postgres folder
     environment:
       POSTGRES_USER: peter
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: smartbrain-docker
       POSTGRES_HOST: postgres
+    build: ./postgres
     ports:
       - "5432:5432"
